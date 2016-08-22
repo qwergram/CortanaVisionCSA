@@ -13,13 +13,11 @@ class ImageQueue(object):
 
     queue_name = "imagesqueue"
     container_name = "unsorted-images"
-    max_unsorted_allowed = 50
 
     def __init__(self, account_name=ACCOUNT_NAME, account_key=ACCOUNT_KEY, workerrole=False):
         self.account_key = account_key
         self.account_name = account_name
         self.workerrole = workerrole
-        self.dequeued = []
         self.init_queue()
         self.init_blob()
 
@@ -40,18 +38,14 @@ class ImageQueue(object):
         except IndexError:  # there is no message
             return {}
         self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
-        if len(self.dequeued) > self.max_unsorted_allowed:
-            self.delete_last_images()
+        
         if message.content == "test":
             return {}
         message_content = json.loads(message.content)
-        self.dequeued.append(message_content)
         return message_content
 
-    def delete_last_images(self):
-        for item in self.dequeued:
-            self.blob.delete_blob(self.container_name, item['name'])
-        self.dequeued = []
+    def delete_last_images(self, message_content):
+        self.blob.delete_blob(message_content['container_name'], message_content['name'])
 
     def __len__(self):
         return self.queue.get_queue_metadata(self.queue_name).approximate_message_count
@@ -99,7 +93,7 @@ if __name__ == '__main__':
     else:
         sys.exit()
 
-
+    print("passed")
     while True:
         if len(IQ) == 0:
             # if there's no work. Take a nap for 5 seconds
