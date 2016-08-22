@@ -10,3 +10,9 @@ class IndexUploadView(TemplateView):
         context = super(IndexUploadView, self).get_context_data(*args, **kwargs)
         # context['something'] = model.objects.all()[:int]
         return context
+
+
+class IndexUploadPost(View):
+
+    def post(self, request, *args, **kwargs):
+        return "Over ride successful!"
