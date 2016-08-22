@@ -43,6 +43,7 @@ class ImageQueue(object):
         self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
         return json.loads(message.content)
 
+
 if __name__ == "__main__":
     IQ = ImageQueue()
     import pdb; pdb.set_trace()

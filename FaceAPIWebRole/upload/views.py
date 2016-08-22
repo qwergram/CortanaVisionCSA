@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.views.generic import View, TemplateView
 
 from upload.forms import UploadImageForm
+from upload.upload_image import ImageQueue
 
 # Create your views here.
 
@@ -19,7 +20,8 @@ class IndexUploadPost(View):
     def post(self, request, *args, **kwargs):
         form = UploadImageForm(request.POST, request.FILES)
         if form.is_valid():
-            return HttpResponse(request.FILES['imageupload'], content_type="image/jpg")
+            IQ = ImageQueue()
+            IQ.new_image(request.FILES)
             return HttpResponseRedirect('/upload/?success=true')
         else:
             return HttpResponseRedirect('/upload/?success=false')
