@@ -4,7 +4,7 @@ from django.views.generic import View, TemplateView
 # Create your views here.
 
 class IndexUploadView(TemplateView):
-    template_name = "index.html"
+    template_name = "upload/index.html"
 
     def get_context_data(self, *args, **kwargs):
         context = super(IndexUploadView, self).get_context_data(*args, **kwargs)
