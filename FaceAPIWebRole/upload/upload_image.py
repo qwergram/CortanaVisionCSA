@@ -9,6 +9,7 @@ class ImageQueue(object):
 
     queue_name = "imagesqueue"
     container_name = "unsorted-images"
+    max_unsorted_allowed = 50
 
     def __init__(self, account_name=ACCOUNT_NAME, account_key=ACCOUNT_KEY):
         self.account_key = account_key
@@ -42,6 +43,8 @@ class ImageQueue(object):
     def get_image(self):
         message = json.loads(self.queue.get_messages(self.queue_name, num_messages=1)[0])
         self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
+        if len(self.dequeued) > self.max_unsorted_allowed:
+            self.delete_last_images()
         self.dequeued.append(message.content)
         return message.content
 
