@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.views.generic import View, TemplateView
+
+from upload.forms import UploadImageForm
 
 # Create your views here.
 
@@ -15,4 +17,9 @@ class IndexUploadView(TemplateView):
 class IndexUploadPost(View):
 
     def post(self, request, *args, **kwargs):
-        return "Over ride successful!"
+        form = UploadImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            # What do you want to do?
+            return HttpResponseRedirect('/upload/?success=true')
+        else:
+            return HttpResponseRedirect('/upload/?success=false')
