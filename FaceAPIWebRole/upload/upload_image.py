@@ -9,7 +9,7 @@ class ImageQueue(object):
     queue_name = "imagesqueue"
     blob_name = "unsorted-images"
 
-    def __init__(self, account_name, account_key):
+    def __init__(self, account_name=ACCOUNT_NAME, account_key=ACCOUNT_KEY):
         self.account_key = account_key
         self.account_name = account_name
         self.init_queue()
@@ -29,9 +29,10 @@ class ImageQueue(object):
         return [x.content for x in self.queue.peek_messages(self.queue_name)]
 
     def new_image(self, django_image):
-        self.blob.create_blob_from_bytes(self.container_name, django_image.name, contents)
+        self.blob.create_blob_from_bytes(self.blob_name, django_image['imageupload'].name, django_image['imageupload'])
 
 
 
-def main():
-    status = ImageQueue(ACCOUNT_NAME, ACCOUNT_KEY)
+if __name__ == "__main__":
+    IQ = ImageQueue()
+    import pdb; pdb.set_trace()
