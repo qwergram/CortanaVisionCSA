@@ -2,12 +2,13 @@ from azure.storage.blob import AppendBlobService, BlockBlobService
 from azure.storage.queue import QueueService
 
 from secrets import ACCOUNT_KEY, ACCOUNT_NAME
+import json
 
 
 class ImageQueue(object):
 
     queue_name = "imagesqueue"
-    blob_name = "unsorted-images"
+    container_name = "unsorted-images"
 
     def __init__(self, account_name=ACCOUNT_NAME, account_key=ACCOUNT_KEY):
         self.account_key = account_key
@@ -18,7 +19,7 @@ class ImageQueue(object):
 
     def init_blob(self):
         self.blob = BlockBlobService(account_name=self.account_name, account_key=self.account_key)
-        self.blob.create_container(self.blob_name)
+        self.blob.create_container(self.container_name)
 
 
     def init_queue(self):
@@ -29,9 +30,18 @@ class ImageQueue(object):
         return [x.content for x in self.queue.peek_messages(self.queue_name)]
 
     def new_image(self, django_image):
-        self.blob.create_blob_from_bytes(self.blob_name, django_image['imageupload'].name, django_image['imageupload'])
+        self.blob.create_blob_from_bytes(self.container_name, django_image['imageupload'].name, django_image['imageupload'])
+        contents = json.dumps({
+            "name": django_image['imageupload'].name,
+            "blobname": self.account_name,
+            "containername": self.container_name,
+        })
+        self.queue.put_message(self.queue_name, contents)
 
-
+    def get_image(self):
+        message = self.queue.get_messages(self.queue_name, num_messages=1)[0]
+        self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
+        return json.loads(message.content)
 
 if __name__ == "__main__":
     IQ = ImageQueue()
