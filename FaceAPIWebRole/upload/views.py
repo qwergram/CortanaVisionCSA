@@ -17,7 +17,8 @@ class IndexUploadView(TemplateView):
 
 class IndexUploadPost(View):
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
+        "Handle Images being uploaded and push them to Queue and Storage Blob"
         form = UploadImageForm(request.POST, request.FILES)
         if form.is_valid():
             IQ = ImageQueue()
