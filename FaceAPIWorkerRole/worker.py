@@ -85,7 +85,7 @@ class CognativeServicesWrapper(object):
             response = requests.post(self.api_endpoint, data=post_data, headers=header_data)
             if response.json() == []:
                 continue
-            return response
+            return response.json()
 
 
 if __name__ == '__main__':
