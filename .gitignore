@@ -253,3 +253,9 @@ obj/
 rcf/
 env/
 __pycache__/
+web.debug.config
+web.release.config
+
+
+# copystatic dirs
+FaceAPIWebRole/static/
