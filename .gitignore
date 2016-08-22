@@ -259,3 +259,6 @@ web.release.config
 
 # copystatic dirs
 FaceAPIWebRole/static/
+
+# Secrets
+secret*
