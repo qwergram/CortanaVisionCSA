@@ -43,6 +43,9 @@ class ImageQueue(object):
         self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
         return json.loads(message.content)
 
+    def __len__(self):
+        return self.queue.get_queue_metadata(self.queue_name).approximate_message_count
+
 
 if __name__ == "__main__":
     IQ = ImageQueue()
