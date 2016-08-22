@@ -1,10 +1,11 @@
 ﻿import json
 from time import sleep
+import requests
 
 from azure.storage.blob import BlockBlobService
 from azure.storage.queue import QueueService
 
-from secrets import ACCOUNT_KEY, ACCOUNT_NAME
+from secrets import ACCOUNT_KEY, ACCOUNT_NAME, COG_ACCOUNT_KEY
 
 
 class ImageQueue(object):
@@ -50,6 +51,30 @@ class ImageQueue(object):
         return self.queue.get_queue_metadata(self.queue_name).approximate_message_count
 
 
+class CognativeServicesWrapper(object):
+
+    api_endpoint = "https://api.projectoxford.ai/face/v1.0/detect"
+    api_key = COG_ACCOUNT_KEY
+
+    def __init__(self, image_dict):
+        try:
+            assert 'name' in image_dict.keys()
+            assert 'blobname' in image_dict.keys()
+            assert 'containername' in image_dict.keys()
+        except AssertionError as e:
+            raise ValueError(e)
+
+        self.image_target = self.to_uri(image_dict)
+
+    def to_uri(self, image_dict):
+        return "https://{}.blob.core.windows.net/{}/{}".format(image_dict['blobname'], image_dict['containername'], image_dict['name'])
+
+    def hit_api(self):
+        post_data = json.dumps({"url": self.image_target})
+        header_data = json.dumps({
+            "Ocp-Apim-Subscription-Key": self.api_key
+        })
+        return requests.post(self.api_endpoint, data=post_data, headers=header_data).json()
 
 
 if __name__ == '__main__':
