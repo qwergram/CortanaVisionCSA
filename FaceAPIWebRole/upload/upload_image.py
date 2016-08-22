@@ -1,8 +1,9 @@
+import json
+
 from azure.storage.blob import AppendBlobService, BlockBlobService
 from azure.storage.queue import QueueService
 
 from secrets import ACCOUNT_KEY, ACCOUNT_NAME
-import json
 
 
 class ImageQueue(object):
