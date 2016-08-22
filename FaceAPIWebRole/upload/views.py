@@ -19,7 +19,7 @@ class IndexUploadPost(View):
     def post(self, request, *args, **kwargs):
         form = UploadImageForm(request.POST, request.FILES)
         if form.is_valid():
-            # What do you want to do?
+            return HttpResponse(request.FILES['imageupload'], content_type="image/jpg")
             return HttpResponseRedirect('/upload/?success=true')
         else:
             return HttpResponseRedirect('/upload/?success=false')
