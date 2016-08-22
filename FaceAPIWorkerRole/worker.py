@@ -71,15 +71,12 @@ class CognativeServicesWrapper(object):
         return "https://{}.blob.core.windows.net/{}/{}".format(image_dict['blobname'], image_dict['containername'], image_dict['name'])
 
     def hit_api(self):
-        while True:
-            post_data = json.dumps({"url": self.image_target})
-            header_data = {
-                "Ocp-Apim-Subscription-Key": self.api_key
-            }
-            response = requests.post(self.api_endpoint, data=post_data, headers=header_data)
-            if response.json() == []:
-                continue
-            return response.json()
+        post_data = json.dumps({"url": self.image_target})
+        header_data = {
+            "Ocp-Apim-Subscription-Key": self.api_key
+        }
+        response = requests.post(self.api_endpoint, data=post_data, headers=header_data)
+        return response.json()
 
 
 if __name__ == '__main__':
