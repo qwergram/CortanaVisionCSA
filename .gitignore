@@ -243,3 +243,13 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# Visual Studio
+.vs/
+bin/
+csx/
+ecf/
+obj/
+rcf/
+env/
+__pycache__/
