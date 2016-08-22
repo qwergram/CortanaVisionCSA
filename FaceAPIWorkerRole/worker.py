@@ -34,7 +34,7 @@ class ImageQueue(object):
         return [x.content for x in self.queue.peek_messages(self.queue_name)]
 
     def get_image(self):
-        message = json.loads(self.queue.get_messages(self.queue_name, num_messages=1)[0])
+        message = json.loads(self.queue.get_messages(self.queue_name, num_messages=1)[0].read(_)
         self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
         if len(self.dequeued) > self.max_unsorted_allowed:
             self.delete_last_images()
@@ -79,6 +79,12 @@ class CognativeServicesWrapper(object):
 
 if __name__ == '__main__':
     IQ = ImageQueue()
+    image = IQ.get_image()
+    COG = CognativeServicesWrapper(image)
+    test = COG.hit_api()
+    import pdb; pdb.set_trace()
+
+
     while True:
         if len(IQ) == 0:
             # if there's no work. Take a nap for 5 seconds
