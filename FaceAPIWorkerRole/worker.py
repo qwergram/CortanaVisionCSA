@@ -59,7 +59,7 @@ class ImageQueue(object):
 
 class CognativeServicesWrapper(object):
 
-    api_endpoint = "https://api.projectoxford.ai/face/v1.0/detect"
+    api_endpoint = "https://api.projectoxford.ai/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=true"
     api_key = COG_ACCOUNT_KEY
 
     def __init__(self, image_dict):
@@ -74,7 +74,7 @@ class CognativeServicesWrapper(object):
         self.image_target = self.to_uri(image_dict)
 
     def to_uri(self, image_dict):
-        return "https://{}.blob.core.windows.net/{}/{}?returnFaceId=true&returnFaceLandmarks=true".format(image_dict['blobname'], image_dict['containername'], image_dict['name'])
+        return "https://{}.blob.core.windows.net/{}/{}".format(image_dict['blobname'], image_dict['containername'], image_dict['name'])
 
     def hit_api(self):
         while True:
@@ -83,7 +83,7 @@ class CognativeServicesWrapper(object):
                 "Ocp-Apim-Subscription-Key": self.api_key
             }
             response = requests.post(self.api_endpoint, data=post_data, headers=header_data)
-            if json.loads(response) == []:
+            if response.json() == []:
                 continue
             return response
 
