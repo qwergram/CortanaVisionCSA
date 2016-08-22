@@ -59,7 +59,7 @@ class ImageQueue(object):
 
 class CognativeServicesWrapper(object):
 
-    api_endpoint = "https://api.projectoxford.ai/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=true"
+    api_endpoint = "https://api.projectoxford.ai/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=true&returnFaceAttributes=age,gender,smile,facialHair,headPose,glasses"
     api_key = COG_ACCOUNT_KEY
 
     def __init__(self, image_dict):
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     if image:
         COG = CognativeServicesWrapper(image)
         test = COG.hit_api()
-        import pdb; pdb.set_trace()
+        
     else:
         sys.exit()
 
