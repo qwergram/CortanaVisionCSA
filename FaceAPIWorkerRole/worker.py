@@ -79,30 +79,25 @@ class CognativeServicesWrapper(object):
         return response.json()
 
 
-if __name__ == '__main__':
-    input("Stop it.")
-    IQ = ImageQueue()
-    image = IQ.get_image()
+def process(imagequeue):
+    image = imagequeue.get_image()
     if image:
         COG = CognativeServicesWrapper(image)
-        test = COG.hit_api()
-        
-    else:
-        sys.exit()
-
-    print("passed")
-    while True:
-        if len(IQ) == 0:
-            # if there's no work. Take a nap for 5 seconds
-            sleep(5)
+        results = COG.hit_api()
+        if len(results):
+            # There are people in this photo
+            pass
         else:
-            image = IQ.get_image()
+            # There are no people in this photo
+            pass
+        # Okay, just chill for a second
+        sleep(1)
+    else:
+        # Poison? Just wait it out.
+        sleep(5)
 
-        #
-        # Write your worker process here.
-        #
-        # You will probably want to call a blocking function such as
-        #    bus_service.receive_queue_message('queue name', timeout=seconds)
-        # to avoid consuming 100% CPU time while your worker has no work.
-        #
-        sleep(1.0)
+
+if __name__ == '__main__':
+    IQ = ImageQueue()
+    while True:
+        process(IQ)
