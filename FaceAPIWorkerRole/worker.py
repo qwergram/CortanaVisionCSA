@@ -1,5 +1,5 @@
 ﻿import json
-from time import sleep
+from time import sleep, time
 import requests
 import sys
 
@@ -13,17 +13,23 @@ class ImageQueue(object):
 
     queue_name = "imagesqueue"
     container_name = "unsorted-images"
+    face_container = "has-face-images"
+    no_face_container = "no-face-images"
+    
 
     def __init__(self, account_name=ACCOUNT_NAME, account_key=ACCOUNT_KEY, workerrole=False):
         self.account_key = account_key
         self.account_name = account_name
         self.workerrole = workerrole
+        self.last_image = None
         self.init_queue()
         self.init_blob()
 
     def init_blob(self):
         self.blob = BlockBlobService(account_name=self.account_name, account_key=self.account_key)
         self.blob.create_container(self.container_name)
+        self.blob.create_container(self.face_container)
+        self.blob.create_container(self.no_face_container)
 
     def init_queue(self):
         self.queue = QueueService(account_name=self.account_name, account_key=self.account_key)
@@ -42,10 +48,25 @@ class ImageQueue(object):
         if message.content == "test":
             return {}
         message_content = json.loads(message.content)
+        self.last_image = message_content
         return message_content
 
-    def delete_last_images(self, message_content):
-        self.blob.delete_blob(message_content['container_name'], message_content['name'])
+    def move_image_to_face_container(self):
+        if self.last_image is None: return None
+        new_name = str(time()).replace('.', '')
+        new_name += '.' + self.last_image['name'].split('.')[-1] 
+        blob_url = self.blob.make_blob_url(self.container_name, self.last_image['name'])
+        self.blob.copy_blob(self.face_container, new_name, blob_url)
+        self.delete_last_image()
+        return new_name
+
+    # http://goo.gl/XN9zkJ :)
+    def move_image_to_no_face_container(self):
+        pass
+
+    def delete_last_image(self):
+        self.blob.delete_blob(self.last_image['container_name'], self.last_image['name'])
+        self.last_image = None
 
     def __len__(self):
         return self.queue.get_queue_metadata(self.queue_name).approximate_message_count
