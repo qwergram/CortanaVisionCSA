@@ -65,7 +65,7 @@ class ImageQueue(object):
         self.delete_last_image()
 
     def delete_last_image(self):
-        self.blob.delete_blob(self.last_image['container_name'], self.last_image['name'])
+        self.blob.delete_blob(self.last_image['containername'], self.last_image['name'])
         self.last_image = None
 
     def __len__(self):
