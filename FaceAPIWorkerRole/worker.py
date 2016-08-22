@@ -107,10 +107,10 @@ def process(imagequeue):
         results = COG.hit_api()
         if len(results):
             # There are people in this photo
-            pass
+            imagequeue.move_image_to_face_container()
         else:
             # There are no people in this photo
-            pass
+            imagequeue.move_image_to_no_face_container()
         # Okay, just chill for a second
         sleep(1)
     else:
