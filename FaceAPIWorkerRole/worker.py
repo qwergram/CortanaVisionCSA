@@ -34,13 +34,13 @@ class ImageQueue(object):
         return [x.content for x in self.queue.peek_messages(self.queue_name)]
 
     def get_image(self):
-        message = json.loads(self.queue.get_messages(self.queue_name, num_messages=1)[0].content)
+        message = self.queue.get_messages(self.queue_name, num_messages=1)[0]
         self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
         if len(self.dequeued) > self.max_unsorted_allowed:
             self.delete_last_images()
-        self.dequeued.append(message.content)
-
-        return message.content
+        message_content = json.loads(message.content)
+        self.dequeued.append(message_content)
+        return message_content
 
     def delete_last_images(self):
         for item in self.dequeued:
@@ -74,7 +74,7 @@ class CognativeServicesWrapper(object):
         header_data = json.dumps({
             "Ocp-Apim-Subscription-Key": self.api_key
         })
-        return requests.post(self.api_endpoint, data=post_data, headers=header_data).json()
+        return requests.post(self.api_endpoint, data=post_data, headers=header_data)
 
 
 if __name__ == '__main__':
