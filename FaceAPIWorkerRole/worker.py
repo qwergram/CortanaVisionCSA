@@ -72,6 +72,7 @@ class ImageQueue(object):
         if len(self.dequeued) > self.max_unsorted_allowed:
             self.delete_last_images()
         self.dequeued.append(message.content)
+        
         return message.content
 
     def delete_last_images(self):
@@ -82,8 +83,16 @@ class ImageQueue(object):
     def __len__(self):
         return self.queue.get_queue_metadata(self.queue_name).approximate_message_count
 
+
 if __name__ == '__main__':
+    IQ = ImageQueue()
     while True:
+        if len(IQ) == 0:
+            # if there's no work. Take a nap for 5 seconds
+            sleep(5)
+        else:
+            image = IQ.get_image()
+
         #
         # Write your worker process here.
         #
