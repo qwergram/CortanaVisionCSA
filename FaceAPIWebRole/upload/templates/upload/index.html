@@ -24,7 +24,7 @@
 			</header>
 
 		<!-- Signup Form -->
-			<form id="upload-form" method="post" action="/upload/" enctype="multipart/form-data">
+			<form id="upload-form" method="post" action="/upload/image/" enctype="multipart/form-data">
 				{% csrf_token %}
 				<input type="file" name="imageupload" id="imageupload" />
 				<input type="submit" value="Upload Image" name="submit" />
