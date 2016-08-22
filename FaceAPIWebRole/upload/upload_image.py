@@ -13,6 +13,7 @@ class ImageQueue(object):
     def __init__(self, account_name=ACCOUNT_NAME, account_key=ACCOUNT_KEY):
         self.account_key = account_key
         self.account_name = account_name
+        self.dequeued = []
         self.init_queue()
         self.init_blob()
 
@@ -39,9 +40,15 @@ class ImageQueue(object):
         self.queue.put_message(self.queue_name, contents)
 
     def get_image(self):
-        message = self.queue.get_messages(self.queue_name, num_messages=1)[0]
+        message = json.loads(self.queue.get_messages(self.queue_name, num_messages=1)[0])
         self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
-        return json.loads(message.content)
+        self.dequeued.append(message.content)
+        return message.content
+
+    def delete_last_images(self):
+        for item in self.dequeued:
+            self.blob.delete_blob(self.container_name, item['name'])
+        self.dequeued = []
 
     def __len__(self):
         return self.queue.get_queue_metadata(self.queue_name).approximate_message_count
