@@ -75,9 +75,9 @@ class CognativeServicesWrapper(object):
 
     def hit_api(self):
         post_data = json.dumps({"url": self.image_target})
-        header_data = json.dumps({
+        header_data = {
             "Ocp-Apim-Subscription-Key": self.api_key
-        })
+        }
         return requests.post(self.api_endpoint, data=post_data, headers=header_data)
 
 
