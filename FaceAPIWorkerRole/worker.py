@@ -1,6 +1,7 @@
 ﻿import json
 from time import sleep
 import requests
+import sys
 
 from azure.storage.blob import BlockBlobService
 from azure.storage.queue import QueueService
@@ -38,6 +39,8 @@ class ImageQueue(object):
         self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
         if len(self.dequeued) > self.max_unsorted_allowed:
             self.delete_last_images()
+        if message.content == "test":
+            return {}
         message_content = json.loads(message.content)
         self.dequeued.append(message_content)
         return message_content
@@ -58,6 +61,7 @@ class CognativeServicesWrapper(object):
 
     def __init__(self, image_dict):
         try:
+            assert isinstance(image_dict, dict)
             assert 'name' in image_dict.keys()
             assert 'blobname' in image_dict.keys()
             assert 'containername' in image_dict.keys()
@@ -78,11 +82,15 @@ class CognativeServicesWrapper(object):
 
 
 if __name__ == '__main__':
+    input("Stop it.")
     IQ = ImageQueue()
     image = IQ.get_image()
-    COG = CognativeServicesWrapper(image)
-    test = COG.hit_api()
-    import pdb; pdb.set_trace()
+    if image:
+        COG = CognativeServicesWrapper(image)
+        test = COG.hit_api()
+        import pdb; pdb.set_trace()
+    else:
+        sys.exit()
 
 
     while True:
