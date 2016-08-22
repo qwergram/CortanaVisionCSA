@@ -253,8 +253,8 @@ obj/
 rcf/
 env/
 __pycache__/
-web.debug.config
-web.release.config
+web.*.config
+.vscode/
 
 
 # copystatic dirs
