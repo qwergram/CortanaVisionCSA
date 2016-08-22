@@ -32,7 +32,7 @@ class ImageQueue(object):
         return [x.content for x in self.queue.peek_messages(self.queue_name)]
 
     def new_image(self, django_image):
-        self.blob.create_blob_from_bytes(self.container_name, django_image['imageupload'].name.encode('utf-8'), django_image['imageupload'].read())
+        self.blob.create_blob_from_bytes(self.container_name, django_image['imageupload'].name, django_image['imageupload'].read())
         contents = json.dumps({
             "name": django_image['imageupload'].name,
             "blobname": self.account_name,
