@@ -35,7 +35,10 @@ class ImageQueue(object):
         return [x.content for x in self.queue.peek_messages(self.queue_name)]
 
     def get_image(self):
-        message = self.queue.get_messages(self.queue_name, num_messages=1)[0]
+        try:
+            message = self.queue.get_messages(self.queue_name, num_messages=1)[0]
+        except IndexError:  # there is no message
+            return {}
         self.queue.delete_message(self.queue_name, message.id, message.pop_receipt)
         if len(self.dequeued) > self.max_unsorted_allowed:
             self.delete_last_images()
@@ -71,7 +74,7 @@ class CognativeServicesWrapper(object):
         self.image_target = self.to_uri(image_dict)
 
     def to_uri(self, image_dict):
-        return "https://{}.blob.core.windows.net/{}/{}".format(image_dict['blobname'], image_dict['containername'], image_dict['name'])
+        return "https://{}.blob.core.windows.net/{}/{}?returnFaceId=true&returnFaceLandmarks=true".format(image_dict['blobname'], image_dict['containername'], image_dict['name'])
 
     def hit_api(self):
         post_data = json.dumps({"url": self.image_target})
