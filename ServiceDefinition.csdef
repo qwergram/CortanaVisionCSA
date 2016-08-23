@@ -36,6 +36,25 @@
          </Variable>
        </Environment>
      </Task>
+   
+     <Task executionContext="elevated" taskType="simple" commandLine="bin\ps.cmd PrepPython.ps1">
+      <Environment>
+        <Variable name="EMULATED">
+          <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+        </Variable>
+        <Variable name="PYTHON2" value="off" />
+      </Environment>
+    </Task>
+
+    <Task executionContext="elevated" taskType="simple" commandLine="bin\ps.cmd PipInstaller.ps1">
+      <Environment>
+        <Variable name="EMULATED">
+          <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
+        </Variable>
+        <Variable name="PYTHON2" value="off" />
+      </Environment>
+    </Task>
+     
    </Startup>
    <Runtime>
      <Environment>
