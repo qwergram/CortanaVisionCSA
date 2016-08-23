@@ -42,6 +42,7 @@
     <Compile Include="FaceAPIWebRole\settings.py" />
     <Compile Include="FaceAPIWebRole\urls.py" />
     <Compile Include="FaceAPIWebRole\wsgi.py" />
+    <Compile Include="secrets.py" />
     <Compile Include="upload\admin.py" />
     <Compile Include="upload\apps.py" />
     <Compile Include="upload\migrations\__init__.py" />
@@ -56,16 +57,18 @@
     <Folder Include="library\" />
     <Folder Include="library\migrations\" />
     <Folder Include="library\templates\" />
+    <Folder Include="library\templates\library\" />
     <Folder Include="upload\" />
     <Folder Include="upload\migrations\" />
     <Folder Include="upload\templates\" />
+    <Folder Include="upload\templates\upload\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="library\templates\index.html" />
+    <Content Include="library\templates\library\index.html" />
     <Content Include="requirements.txt" />
     <Content Include="bin\ConfigureCloudService.ps1" />
     <Content Include="bin\ps.cmd" />
-    <Content Include="upload\templates\index.html" />
+    <Content Include="upload\templates\upload\index.html" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">
