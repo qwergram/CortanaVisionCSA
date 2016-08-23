@@ -57,10 +57,14 @@
   <ItemGroup>
     <Folder Include="FaceAPIWebRoleContent\" />
     <Folder Include="FaceAPIWorkerRoleContent\" />
+    <Folder Include="Profiles" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="FaceAPIWebRoleContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="FaceAPIWorkerRoleContent\diagnostics.wadcfgx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\msftfaceapiProduction.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
