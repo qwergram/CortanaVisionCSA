@@ -68,11 +68,6 @@
     <Content Include="upload\templates\index.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Readme.mht">
-      <SubType>WebBrowser</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Interpreter Include="env\">
       <Id>{9694c95b-aa63-47e5-9c47-5262f0cd5863}</Id>
       <BaseInterpreter>{2af0f10d-7135-4994-9156-5d01c9c11b7e}</BaseInterpreter>
