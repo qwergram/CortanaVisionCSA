@@ -22,5 +22,5 @@ urlpatterns = [
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^upload/', include(upload.urls)),
-    url(r'^library/', include(library.urls)),
+    url(r'^', include(library.urls)),
 ]
