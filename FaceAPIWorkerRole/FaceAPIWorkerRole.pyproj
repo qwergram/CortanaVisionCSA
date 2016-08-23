@@ -33,11 +33,6 @@
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Readme.mht">
-      <SubType>WebBrowser</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="bin" />
   </ItemGroup>
   <ItemGroup>
