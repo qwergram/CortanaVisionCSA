@@ -12,7 +12,7 @@ def get_urls_from_container(containername):
 
 
 class UnsortedImageView(TemplateView):
-    template_name = "folder/name.html"
+    template_name = "library/index.html"
 
     def get_context_data(self, *args, **kwargs):
         context = super(UnsortedImageView, self).get_context_data(*args, **kwargs)
@@ -21,7 +21,7 @@ class UnsortedImageView(TemplateView):
 
 
 class FaceImageView(TemplateView):
-    template_name = "samefolder"
+    template_name = "library/index.html"
 
     def get_context_data(self, *args, **kwargs):
         context = super(FaceImageView, self).get_context_data(*args, **kwargs)
@@ -30,7 +30,7 @@ class FaceImageView(TemplateView):
 
 
 class NoFaceImageView(TemplateView):
-    template_name = "samefolder"
+    template_name = "library/index.html"
 
     def get_context_data(self, *args, **kwargs):
         context = super(NoFaceImageView, self).get_context_data(*args, **kwargs)
