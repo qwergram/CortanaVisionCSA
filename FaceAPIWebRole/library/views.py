@@ -17,6 +17,7 @@ class UnsortedImageView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(UnsortedImageView, self).get_context_data(*args, **kwargs)
         context['image_list'] = get_urls_from_container('unsorted-images')
+        context['title'] = "Unsorted Images"
         return context
 
 
@@ -26,6 +27,7 @@ class FaceImageView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(FaceImageView, self).get_context_data(*args, **kwargs)
         context['image_list'] = get_urls_from_container('has-face-images')
+        context['title'] = "Images with Faces"
         return context
 
 
@@ -35,4 +37,5 @@ class NoFaceImageView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(NoFaceImageView, self).get_context_data(*args, **kwargs)
         context['image_list'] = get_urls_from_container('no-face-images')
+        context['title'] = "Images without Faces"
         return context
