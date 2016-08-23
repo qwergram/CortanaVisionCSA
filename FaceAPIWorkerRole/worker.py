@@ -102,13 +102,16 @@ class CognativeServicesWrapper(object):
 
 def process(imagequeue):
     image = imagequeue.get_image()
+    print(image)
     if image:
         COG = CognativeServicesWrapper(image)
         results = COG.hit_api()
         if len(results):
+            print("Moving to face")
             # There are people in this photo
             imagequeue.move_image_to_face_container()
         else:
+            print("Moving to noface")
             # There are no people in this photo
             imagequeue.move_image_to_no_face_container()
         # Okay, just chill for a second
@@ -119,6 +122,12 @@ def process(imagequeue):
 
 
 if __name__ == '__main__':
-    IQ = ImageQueue()
-    while True:
-        process(IQ)
+    with open("C:\\Users\\v-nopeng\\AppData\\Roaming\\test.txt", 'w') as context:
+        context.write("did something")
+    try:
+        IQ = ImageQueue()
+        while True:
+            process(IQ)
+    except Exception as error:
+        with open("C:\\Users\\v-nopeng\\AppData\\Roaming\\error.txt", 'w') as context:
+            context.write(str(error))
