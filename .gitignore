@@ -262,3 +262,6 @@ FaceAPIWebRole/static/
 
 # Secrets
 secret*
+
+# Django
+db.sqlite3
