@@ -1,15 +1,57 @@
 <html>
-<head><title>{{title}}</title></head>
+<head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+    </style>
+
+</head>
 
 <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Microsoft Face Recognition API</a>
+        </div>
+      </div>
+    </nav>
 
-{{ title }}
+<div class="jumbotron">
+      <div class="container">
+        <h1>{{ title }}</h1>
+      </div>
+    </div>
+
+<div class="container">
+
 
 {% for image in image_list %}
-<img src="{{image}}"><br/>
+<div class="col-md-4">
+<img src="{{image}}" width="100%">
 
+</div>
 
 {% endfor %}
 
+</div>
+
+<div class="container">
+<hr>
+
+
+<footer>
+<p>&copy; 2016 Microsoft, Inc.</p>
+</footer>
+</div>
 </body>
 </html>
