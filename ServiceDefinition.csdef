@@ -35,7 +35,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
     <Startup>
-      <Task commandLine="bin\ps.cmd ConfigureCloudService.ps1" executionContext="elevated" taskType="simple">
+      <!--<Task commandLine="bin\ps.cmd ConfigureCloudService.ps1" executionContext="elevated" taskType="simple">
         <Environment>
           <Variable name="EMULATED">
             <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
@@ -53,17 +53,20 @@
           <Variable name="EMULATED" value="false"/>
           <Variable name="PYTHON2" value="off" />
         </Environment>
-      </Task>
+      </Task>-->
     </Startup>
     <Runtime>
-      <Environment>
+      <EntryPoint>
+        <ProgramEntryPoint commandLine="bin\run.cmd" setReadyOnProcessStart="true" />
+      </EntryPoint>
+      <!--<Environment>
         <Variable name="EMULATED">
           <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
         </Variable>
       </Environment>
       <EntryPoint>
         <ProgramEntryPoint commandLine="bin\ps.cmd LaunchWorker.ps1" setReadyOnProcessStart="true" />
-      </EntryPoint>
+      </EntryPoint>-->
     </Runtime>
     <Imports>
       <Import moduleName="RemoteAccess" />
