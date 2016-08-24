@@ -255,7 +255,7 @@ env/
 __pycache__/
 web.*.config
 .vscode/
-
+*.dll
 
 # copystatic dirs
 FaceAPIWebRole/static/
