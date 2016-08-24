@@ -15,13 +15,16 @@
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
     </Endpoints>
     <Startup>
-      <Task executionContext="elevated" taskType="simple" commandLine="ps.cmd ConfigureCloudService.ps1">
+      <Task commandLine="bin\prepare_python.ps1" taskType="simple" executionContext="elevated"></Task>
+      
+      <!--<Task executionContext="elevated" taskType="simple" commandLine="ps.cmd ConfigureCloudService.ps1">
         <Environment>
           <Variable name="EMULATED">
             <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
           </Variable>
         </Environment>
-      </Task>
+      </Task>-->
+      
     </Startup>
     <Imports>
       <Import moduleName="RemoteAccess" />
