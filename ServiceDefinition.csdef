@@ -15,7 +15,13 @@
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
     </Endpoints>
     <Startup>
-      <Task commandLine="bin\prepare_python.ps1" taskType="simple" executionContext="elevated"></Task>
+      <Task commandLine="ps.cmd prepare_python.ps1" taskType="simple" executionContext="elevated">
+        <Environment>
+          <!-- The python version to install -->
+          <Variable name="python_target" value="3.5" />
+          
+        </Environment>
+      </Task>
       
       <!--<Task executionContext="elevated" taskType="simple" commandLine="ps.cmd ConfigureCloudService.ps1">
         <Environment>

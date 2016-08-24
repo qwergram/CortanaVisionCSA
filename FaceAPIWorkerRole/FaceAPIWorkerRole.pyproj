@@ -30,6 +30,7 @@
     <Content Include="bin\ConfigureCloudService.ps1" />
     <Content Include="bin\LaunchWorker.ps1" />
     <Content Include="bin\ps.cmd" />
+    <Content Include="bin\run.cmd" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>

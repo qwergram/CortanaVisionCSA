@@ -64,6 +64,7 @@
     <Folder Include="upload\templates\upload\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\prepare_python.ps1" />
     <Content Include="library\templates\library\index.html" />
     <Content Include="requirements.txt" />
     <Content Include="bin\ConfigureCloudService.ps1" />
