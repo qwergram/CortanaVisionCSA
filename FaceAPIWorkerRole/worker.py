@@ -122,12 +122,10 @@ def process(imagequeue):
 
 
 if __name__ == '__main__':
-    with open("C:\\Users\\v-nopeng\\AppData\\Roaming\\test.txt", 'w') as context:
-        context.write("did something")
-    try:
-        IQ = ImageQueue()
-        while True:
-            process(IQ)
-    except Exception as error:
-        with open("C:\\Users\\v-nopeng\\AppData\\Roaming\\error.txt", 'w') as context:
-            context.write(str(error))
+    # try:
+    IQ = ImageQueue()
+    while True:
+        process(IQ)
+    # except Exception as error:
+    #     with open("C:\\Users\\v-nopeng\\AppData\\Roaming\\error.txt", 'w') as context:
+    #         context.write(str(error))
