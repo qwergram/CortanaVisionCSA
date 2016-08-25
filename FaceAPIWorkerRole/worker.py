@@ -123,6 +123,9 @@ def show_faces(image_target, results):
         for point in person['faceLandmarks'].values():
             x, y = point['x'], point['y']
             pen.ellipse([x - 1, y - 1, x + 1, y + 1], fill = pen_color)
+
+    im_obj.show()
+    im_obj.save('image.png', 'png')
         
 
 
