@@ -26,6 +26,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="secrets.py" />
     <Compile Include="worker.py" />
     <Content Include="bin\ConfigureCloudService.ps1" />
     <Content Include="bin\LaunchWorker.ps1" />
