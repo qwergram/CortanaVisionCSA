@@ -1,7 +1,9 @@
 ﻿import json
+import shutil
 from time import sleep, time
 import requests
 import sys
+from PIL import Image, ImageDraw
 
 from azure.storage.blob import BlockBlobService
 from azure.storage.queue import QueueService
@@ -100,14 +102,25 @@ class CognativeServicesWrapper(object):
         return response.json()
 
 
+def show_faces(image_target, results):
+    image = requests.get(image_target, stream=True).raw
+    image_ext = image.split('.')[-1]
+    print(image_ext)
+    # with open("image.png", "wb") as f:
+    #     image.decode_content = True
+    #     shutil.copyfileobj(image, f)
+
+
 def process(imagequeue):
     image = imagequeue.get_image()
     print(image)
     if image:
         COG = CognativeServicesWrapper(image)
+        image_target = COG.image_target
         results = COG.hit_api()
         if len(results):
             print("Moving to face")
+            show_faces(image_target, results)
             # There are people in this photo
             imagequeue.move_image_to_face_container()
         else:
