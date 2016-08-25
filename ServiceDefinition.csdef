@@ -37,9 +37,9 @@
     </Imports>
   </WebRole>
   <WorkerRole name="FaceAPIWorkerRole" vmsize="Small">
-    <ConfigurationSettings>
+    <!--<ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-    </ConfigurationSettings>
+    </ConfigurationSettings>-->
     <Startup>
       <!--<Task commandLine="bin\ps.cmd ConfigureCloudService.ps1" executionContext="elevated" taskType="simple">
         <Environment>
