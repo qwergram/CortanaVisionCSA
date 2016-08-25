@@ -53,17 +53,24 @@ class ImageQueue(object):
         self.last_image = message_content
         return message_content
 
-    def move_image_to_face_container(self):
+    # def move_image_to_face_container(self):
+    #     if self.last_image is None: return None
+    #     blob_url = self.blob.make_blob_url(self.last_image['containername'], self.last_image['name'])
+    #     self.blob.copy_blob(self.face_container, self.last_image['name'], blob_url)
+    #     self.delete_last_image()
+
+    def upload_image_to_face_container(self, container_name, path):
         if self.last_image is None: return None
-        blob_url = self.blob.make_blob_url(self.last_image['containername'], self.last_image['name'])
-        self.blob.copy_blob(self.face_container, self.last_image['name'], blob_url)
+        new_name = str(time()).replace('.', '') + path.split('.')[-1]
+        self.blob.create_blob_from_path(container_name, new_name, path)
         self.delete_last_image()
 
     # http://goo.gl/XN9zkJ :)
     def move_image_to_no_face_container(self):
         if self.last_image is None: return None
+        new_name = str(time()).replace('.', '') + self.last_image['name'].split('.')[-1]
         blob_url = self.blob.make_blob_url(self.last_image['containername'], self.last_image['name'])
-        self.blob.copy_blob(self.no_face_container, self.last_image['name'], blob_url)
+        self.blob.copy_blob(self.no_face_container, new_name, blob_url)
         self.delete_last_image()
 
     def delete_last_image(self):
@@ -126,7 +133,7 @@ def show_faces(image_target, results):
 
     im_obj.show()
     im_obj.save('image.png', 'png')
-        
+    
 
 
 def process(imagequeue):
@@ -140,7 +147,7 @@ def process(imagequeue):
             print("Moving to face")
             show_faces(image_target, results)
             # There are people in this photo
-            imagequeue.move_image_to_face_container()
+            imagequeue.upload_image_to_face_container(imagequeue.face_container, "image.png")
         else:
             print("Moving to noface")
             # There are no people in this photo
