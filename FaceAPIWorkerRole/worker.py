@@ -104,11 +104,11 @@ class CognativeServicesWrapper(object):
 
 def show_faces(image_target, results):
     image = requests.get(image_target, stream=True).raw
-    image_ext = image.split('.')[-1]
+    image_ext = image_target.split('.')[-1]
     print(image_ext)
-    # with open("image.png", "wb") as f:
-    #     image.decode_content = True
-    #     shutil.copyfileobj(image, f)
+    with open("image.{}".format(image_ext), "wb") as f:
+        image.decode_content = True
+        shutil.copyfileobj(image, f)
 
 
 def process(imagequeue):
