@@ -53,12 +53,6 @@ class ImageQueue(object):
         self.last_image = message_content
         return message_content
 
-    # def move_image_to_face_container(self):
-    #     if self.last_image is None: return None
-    #     blob_url = self.blob.make_blob_url(self.last_image['containername'], self.last_image['name'])
-    #     self.blob.copy_blob(self.face_container, self.last_image['name'], blob_url)
-    #     self.delete_last_image()
-
     def upload_image_to_face_container(self, container_name, path):
         if self.last_image is None: return None
         new_name = str(time()).replace('.', '') + '.' + path.split('.')[-1]
