@@ -105,10 +105,25 @@ class CognativeServicesWrapper(object):
 def show_faces(image_target, results):
     image = requests.get(image_target, stream=True).raw
     image_ext = image_target.split('.')[-1]
-    print(image_ext)
-    with open("image.{}".format(image_ext), "wb") as f:
+    image_path = "image.{}".format(image_ext) 
+    with open(image_path, "wb") as context:
         image.decode_content = True
-        shutil.copyfileobj(image, f)
+        shutil.copyfileobj(image, context)
+    im_obj = Image.open(image_path)
+    pen = ImageDraw.Draw(im_obj)
+
+    for person in results:
+        height = person['faceRectangle']['height']
+        width = person['faceRectangle']['width']
+        left = person['faceRectangle']['left']
+        top = person['faceRectangle']['top']
+        print(person['faceRectangle'], person['faceAttributes']['gender'], person['faceAttributes']['age'])
+        pen_color = "blue" if person['faceAttributes']['gender'] == "male" else "pink"
+        pen.rectangle([left, top, left+ width, top + height], outline = pen_color)
+        for point in person['faceLandmarks'].values():
+            x, y = point['x'], point['y']
+            pen.ellipse([x - 1, y - 1, x + 1, y + 1], fill = pen_color)
+        
 
 
 def process(imagequeue):
