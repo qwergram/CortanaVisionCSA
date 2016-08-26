@@ -17,7 +17,7 @@
     <Startup>
       <Task commandLine="ps.cmd prepare_python.ps1" taskType="simple" executionContext="elevated">
         <Environment>
-          <!-- The python version to install -->
+          <!-- The python version to install * NOT IN USE CAN BE DELETED * -->
           <Variable name="python_target" value="3.5" />
           
         </Environment>
@@ -37,18 +37,18 @@
     </Imports>
   </WebRole>
   <WorkerRole name="FaceAPIWorkerRole" vmsize="Small">
-    <!--<ConfigurationSettings>
+    <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-    </ConfigurationSettings>-->
+    </ConfigurationSettings>
     <Startup>
-      <!--<Task commandLine="bin\ps.cmd ConfigureCloudService.ps1" executionContext="elevated" taskType="simple">
+      <Task commandLine="bin\ps.cmd ConfigureCloudService.ps1" executionContext="elevated" taskType="simple">
         <Environment>
           <Variable name="EMULATED">
             <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
           </Variable>
         </Environment>
       </Task>
-      <Task executionContext="elevated" taskType="simple" commandLine="bin\ps.cmd PrepPython.ps1">
+      <!--<Task executionContext="elevated" taskType="simple" commandLine="bin\ps.cmd PrepPython.ps1">
         <Environment>
           <Variable name="EMULATED" value="false" />
           <Variable name="PYTHON2" value="off" />
@@ -62,17 +62,17 @@
       </Task>-->
     </Startup>
     <Runtime>
-      <EntryPoint>
+      <!--<EntryPoint>
         <ProgramEntryPoint commandLine="bin\run.cmd" setReadyOnProcessStart="true" />
       </EntryPoint>
-      <!--<Environment>
+      <Environment>
         <Variable name="EMULATED">
           <RoleInstanceValue xpath="/RoleEnvironment/Deployment/@emulated" />
         </Variable>
-      </Environment>
+      </Environment>-->
       <EntryPoint>
         <ProgramEntryPoint commandLine="bin\ps.cmd LaunchWorker.ps1" setReadyOnProcessStart="true" />
-      </EntryPoint>-->
+      </EntryPoint>
     </Runtime>
     <Imports>
       <Import moduleName="RemoteAccess" />
